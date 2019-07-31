@@ -64,6 +64,14 @@ class AppointmentController {
             });
         }
 
+        const isSameUser = req.userId === req.body.provider_id;
+
+        if (isSameUser) {
+            return res.status(401).json({
+                error: 'you cannot create an appoiment for yourself',
+            });
+        }
+
         const hourStart = startOfHour(parseISO(date));
 
         /**
